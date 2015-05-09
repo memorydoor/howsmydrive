@@ -1,1 +1,0 @@
-web: java -Dserver.port=$PORT -Dgrails.env=prod -jar howsmydrive*.jar
