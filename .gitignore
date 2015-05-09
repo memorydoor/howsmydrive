@@ -4,3 +4,4 @@ out
 howsmydrive.iml
 analyse
 .gradle
+.gradle/*
