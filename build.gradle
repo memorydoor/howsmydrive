@@ -111,16 +111,16 @@ dependencies {
     jetty8 "org.mortbay.jetty:jetty-runner:8.1.0.RC0"
 }
 
-task copyRuntimeLibs(type: Copy) {
+task copyAssembledJar(type: Copy) {
 
-    into "build/libs"
+    into "."
 
-    from configurations.jetty8
+    from "build/libs"
 
 }
 
 
-task stage(dependsOn: ['clean','assemble'])   {
+task stage(dependsOn: ['clean','assemble', 'copyAssembles'])   {
 
 }
 
