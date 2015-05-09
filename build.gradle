@@ -114,9 +114,11 @@ dependencies {
 task copyAssembles(type: Copy, dependsOn: ['assemble']) {
     into "."
     from "build/libs"
+
 }
 
-task stage(dependsOn: ['copyAssembles'])   {
-
+//dependsOn: ['copyAssembles']
+task stage(dependsOn: ['assemble']) {
+    println file(".").path
 }
 
