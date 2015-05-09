@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dgrails.env=test -jar server/jetty-runner.jar --port $PORT build/libs/*.war
+web: java -Dserver.port=$PORT -Dgrails.env=prod -jar build/libs/howsmydrive*.jar

@@ -2,3 +2,5 @@
 build
 out
 howsmydrive.iml
+analyse
+.gradle
