@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main"/>
-        <title>享受驾驶乐趣</title>
+        <title>This is trip page</title>
         <style type="text/css" media="screen">
             #status {
                 background-color: #eee;
@@ -79,25 +79,43 @@
     <body>
         <a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div id="status" role="complementary">
-            <h1>我的旅行</h1>
+            <h1>Application Status</h1>
             <ul>
-                <li>登陆</li>
-                <li>注册</li>
-                <li>.</li>
-                <li>.</li>
-                <li>.</li>
-                <li>.</li>
-                <li>.</li>
+                <li>Environment: ${grails.util.Environment.current.name}</li>
+                <li>App profile: ${grailsApplication.config.grails?.profile}</li>
+                <li>App version: <g:meta name="info.app.version"/></li>
+                <li>Grails version: <g:meta name="info.app.grailsVersion"/></li>
+                <li>Groovy version: ${GroovySystem.getVersion()}</li>
+                <li>JVM version: ${System.getProperty('java.version')}</li>
+                <li>Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</li>
+            </ul>
+            <h1>Artefacts</h1>
+            <ul>
+                <li>Controllers: ${grailsApplication.controllerClasses.size()}</li>
+                <li>Domains: ${grailsApplication.domainClasses.size()}</li>
+                <li>Services: ${grailsApplication.serviceClasses.size()}</li>
+                <li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
+            </ul>
+            <h1>Installed Plugins</h1>
+            <ul>
+                <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
+                    <li>${plugin.name} - ${plugin.version}</li>
+                </g:each>
             </ul>
         </div>
         <div id="page-body" role="main">
-            <h1>欢迎来到首页</h1>
-            <p>为您提供详细的驾车记录，方便您更好地管理您的汽车。</p>
+            <h1>Welcome to Grails</h1>
+            <p>Congratulations, you have successfully started your first Grails application! At the moment
+               this is the default page, feel free to modify it to either redirect to a controller or display whatever
+               content you may choose. Below is a list of controllers that are currently deployed in this application,
+               click on each to execute its default action:</p>
 
             <div id="controller-list" role="navigation">
-                <h2></h2>
+                <h2>Available Controllers:</h2>
                 <ul>
-                    <li class="controller"><g:link controller="trip">点击查阅您的旅行记录</g:link></li>
+                    <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
+                        <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
+                    </g:each>
                 </ul>
             </div>
         </div>
