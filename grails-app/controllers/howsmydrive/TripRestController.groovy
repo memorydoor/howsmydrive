@@ -24,6 +24,7 @@ class TripRestController extends RestfulController{
         def o =  getObjectToBind()
 
         o.JSON.trips.each {
+            println it.toString()
             def trip = new Trip(JSON.parse(it.toString()))
             println System.currentTimeMillis()
             println trip
