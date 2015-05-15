@@ -24,6 +24,11 @@ class ObdReadingRestController extends RestfulController{
 
         o.JSON.obdReadings.each {
             println it.toString()
+            def obdReading = new ObdReading(JSON.parse(it.toString()))
+            println System.currentTimeMillis()
+            println obdReading
+            obdReading.save(flush:true)
+            println obdReading
         }
 
         respond(null, [status: 200])
