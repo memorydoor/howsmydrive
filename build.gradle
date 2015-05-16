@@ -7,6 +7,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "http://repo.grails.org/grails/repo" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -45,6 +46,7 @@ assets {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url "http://repo.grails.org/grails/repo" }
 }
 
 dependencyManagement {
@@ -69,6 +71,8 @@ dependencies {
     compile "org.grails:grails-web-boot"
 
     compile "org.grails.plugins:hibernate"
+    compile "org.grails:grails-console:$grailsVersion"
+
     compile "mysql:mysql-connector-java:5.1.35"
 
     //compile "org.apache.derby:derby:10.11.1.1"
