@@ -6,6 +6,7 @@ class Trip {
     Date endDate
     Integer engineRpmMax
     Integer speed
+    Integer tripId
 
     static constraints = {
     }

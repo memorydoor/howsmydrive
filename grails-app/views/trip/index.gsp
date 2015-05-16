@@ -17,8 +17,26 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${tripList}" />
-
+            <table>
+                <thead>
+                <tr>
+                    <g:sortableColumn property="id" title="${message(code: 'person.firstName.label', default: 'Id')}" />
+                    <g:sortableColumn property="startDate" title="${message(code: 'person.lastName.label', default: 'Start Date')}" />
+                    <g:sortableColumn property="endDate" title="${message(code: 'person.dateOfBirth.label', default: 'End Date')}" />
+                    <g:sortableColumn property="endDate" title="${message(code: 'person.dateOfBirth.label', default: 'Details')}" />
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${tripList}" status="i" var="personInstance">
+                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                        <td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "id")}</g:link></td>
+                        <td><g:formatDate date="${personInstance.startDate}" /></td>
+                        <td><g:formatDate date="${personInstance.endDate}" /></td>
+                        <td><g:link controller="obdReading" action="index" params="[tripId:personInstance.tripId]" id="${personInstance.tripId}">details</g:link></td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
             <div class="pagination">
                 <g:paginate total="${tripCount ?: 0}" />
             </div>

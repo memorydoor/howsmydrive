@@ -8,9 +8,9 @@ class ObdReadingController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+    def index(Integer max, Integer tripId) {
         params.max = Math.min(max ?: 10, 100)
-        respond ObdReading.list(params), model:[obdReadingCount: ObdReading.count()]
+        respond ObdReading.findAllByTripId(tripId), model:[obdReadingCount: ObdReading.count()]
     }
 
     def show(ObdReading obdReading) {
