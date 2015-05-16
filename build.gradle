@@ -57,10 +57,10 @@ dependencyManagement {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-logging"
+    //compile "org.springframework.boot:spring-boot-starter-logging"
 
     //https://github.com/spring-projects/spring-boot/tree/master/spring-boot-actuator
-    compile "org.springframework.boot:spring-boot-starter-actuator"
+    //compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile ("org.grails:grails-dependencies") {
@@ -71,7 +71,7 @@ dependencies {
     compile "org.grails:grails-web-boot"
 
     compile "org.grails.plugins:hibernate"
-    compile "org.grails:grails-console:$grailsVersion"
+    runtime "org.grails:grails-console:$grailsVersion"
 
     compile "mysql:mysql-connector-java:5.1.35"
 

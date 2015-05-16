@@ -93,7 +93,7 @@ environments:
     production:
         dataSource:
             driverClassName: com.mysql.jdbc.Driver
-            dbCreate: update
+            #dbCreate: update
             url: jdbc:mysql://us-cdbr-iron-east-02.cleardb.net/heroku_9a46f22e7e78e7c?reconnect=true
             username: b495e5a35bc842
             password: 6adac297
