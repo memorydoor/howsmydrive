@@ -27,7 +27,11 @@ class ObdReadingRestController extends RestfulController{
             def obdReading = new ObdReading(JSON.parse(it.toString()))
             println System.currentTimeMillis()
             println obdReading
-            obdReading.save(flush:true)
+            if (!obdReading.save(flush:true)) {
+                obdReading.errors.each {
+                    println it
+                }
+            }
             println obdReading
         }
 
