@@ -17,7 +17,7 @@ class TripRestController extends RestfulController{
     def index(Trip trip) {
 
         println trip
-        respond(null, [status: 200])
+        respond([status: 200])
     }
 
     def postTrips() {
@@ -34,7 +34,7 @@ class TripRestController extends RestfulController{
             println trip
         }
 
-        respond(null, [status: 200])
+        respond([status: 200])
     }
 
 }

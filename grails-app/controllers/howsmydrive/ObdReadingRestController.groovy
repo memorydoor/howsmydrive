@@ -16,7 +16,7 @@ class ObdReadingRestController extends RestfulController{
     def index() {
 
         //println obdReading
-        respond(null, [status: 200])
+        respond([status: 200])
     }
 
     def postObdReading() {
@@ -41,6 +41,6 @@ class ObdReadingRestController extends RestfulController{
             println obdReading
         }
 
-        respond(null, [status: 200])
+        respond([status: 200])
     }
 }
