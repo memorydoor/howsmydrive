@@ -18,8 +18,24 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${obdReadingList}" />
-
+            <table>
+                <thead>
+                <tr>
+                    <g:sortableColumn property="latitude" title="${message(code: 'person.firstName.label', default: 'Latitude')}" />
+                    <g:sortableColumn property="startDate" title="${message(code: 'person.lastName.label', default: 'Longitude')}" />
+                    <g:sortableColumn property="endDate" title="${message(code: 'person.dateOfBirth.label', default: 'Speed')}" />
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${obdReadingList}" status="i" var="obdReading">
+                    <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+                        <td>${fieldValue(bean: obdReading, field: "latitude")}</td>
+                        <td>${fieldValue(bean: obdReading, field: "longitude")}</td>
+                        <td>${fieldValue(bean: obdReading, field: "speed")}</td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
             <div class="pagination">
                 <g:paginate total="${obdReadingCount ?: 0}" />
             </div>
