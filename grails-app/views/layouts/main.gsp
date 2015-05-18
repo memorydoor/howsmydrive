@@ -11,7 +11,7 @@
         <g:layoutHead/>
     </head>
     <body>
-        <div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
+        <div id="grailsLogo" role="banner"><a>乐驾</a></div>
         <g:layoutBody/>
         <div class="footer" role="contentinfo">
             <g:if env="development">
