@@ -36,6 +36,14 @@ apply plugin: "org.grails.grails-gsp"
 ext {
     grailsVersion = project.grailsVersion
     gradleWrapperVersion = project.gradleWrapperVersion
+
+    slf4jVersion = "1.7.10"
+
+    //Test
+    junitVersion = "4.12"
+    spockVersion = '1.0-groovy-2.4'
+    cglibVersion = "2.2.2"
+    objenesisVersion = "1.4"
 }
 
 assets {
@@ -93,6 +101,20 @@ dependencies {
     //console "org.grails:grails-console"
 
 
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+
+    // Testing
+    testCompile "junit:junit:${junitVersion}"
+
+    testCompile("org.spockframework:spock-core:${spockVersion}") {
+        transitive = false
+        exclude group:'junit', module: 'junit-dep'
+        exclude group:'org.codehaus.groovy', module: 'groovy-all'
+    }
+    // Required by Spock's Mocking
+    testCompile "cglib:cglib-nodep:${cglibVersion}"
+    testCompile "org.objenesis:objenesis:${objenesisVersion}"
 }
 
 task createStartScripts(type: MyCreateStartScripts) {
