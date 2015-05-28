@@ -103,6 +103,7 @@ dependencies {
 
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+    compile "org.slf4j:slf4j-simple:$slf4jVersion"
 
     // Testing
     testCompile "junit:junit:${junitVersion}"
