@@ -1,5 +1,6 @@
 package howsmydrive
 
+import com.goodriver.grails.MyErrors
 import grails.converters.JSON
 import grails.rest.RestfulController
 import grails.transaction.Transactional
@@ -21,6 +22,7 @@ class ObdReadingRestController extends RestfulController{
 
     def postObdReading() {
         def o =  getObjectToBind()
+        def myErrors
 
         o.JSON.obdReadings.each {
             println it.toString()
@@ -30,17 +32,20 @@ class ObdReadingRestController extends RestfulController{
 
             obdReading.readings = it.readings.toString()
 
-            if (it.readings.SPEED)
-                obdReading.speed = Integer.valueOf(it.readings.SPEED)
-
-            if (!obdReading.save(flush:true)) {
-                obdReading.errors.each {
-                    println it
+            if (obdReading.validate()) {
+                obdReading.save(flush: true)
+            } else {
+                if (!myErrors){
+                    myErrors = new MyErrors()
                 }
+                myErrors.addAllErrors(obdReading.errors)
             }
-            println obdReading
         }
 
-        respond([status: 200])
+        if (myErrors) {
+            respond myErrors
+        } else {
+            respond([status: 200])
+        }
     }
 }

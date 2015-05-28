@@ -10,9 +10,9 @@ import org.springframework.validation.ObjectError
  */
 class MyErrors extends AbstractErrors {
 
-    List<ObjectError> objectErrors
+    List<ObjectError> objectErrors = new ArrayList<ObjectError>()
 
-    List<FieldError> fieldErrors
+    List<FieldError> fieldErrors = new ArrayList<FieldError>()
 
     String getObjectName() {
         return null
@@ -27,7 +27,7 @@ class MyErrors extends AbstractErrors {
     }
 
     void addAllErrors(Errors errors) {
-        objectErrors.addAll(errors.allErrors)
+        objectErrors.addAll(errors.globalErrors)
         fieldErrors.addAll(errors.fieldErrors)
     }
 
