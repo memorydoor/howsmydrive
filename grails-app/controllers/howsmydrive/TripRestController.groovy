@@ -23,18 +23,35 @@ class TripRestController extends RestfulController{
     def postTrips() {
         def o =  getObjectToBind()
 
-        o.JSON.trips.each {
-            println it.toString()
-            def trip = new Trip(JSON.parse(it.toString()))
+        def noError = true
+        def numberOfTrips = 0
 
-            trip.tripId = it.id
-            println System.currentTimeMillis()
-            println trip
-            trip.save(flush:true)
-            println trip
+        println o.JSON
+        if (o.JSON.size() == 1 && o.JSON[0].size() == 0) {
+            respond ([error: "no data"])
         }
 
-        respond([status: 200])
+        def tempTrip
+        o.JSON.each {
+            def trip = new Trip(JSON.parse(it.toString()))
+
+            if (trip.validate()) {
+                trip.save(flush:true)
+                numberOfTrips++;
+            } else {
+                tempTrip = trip
+                trip.errors.each {
+                    println it
+                }
+                noError = false
+            }
+        }
+
+        if (noError) {
+            respond([message: "Saved $numberOfTrips trip."])
+        }
+
+        respond tempTrip
     }
 
 }

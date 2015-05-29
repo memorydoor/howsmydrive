@@ -106,6 +106,10 @@ dependencies {
     compile "org.slf4j:slf4j-simple:$slf4jVersion"
 
     // Testing
+    testCompile "org.grails:grails-plugin-testing:$grailsVersion"
+    testCompile "org.grails:grails-test:$grailsVersion"
+
+
     testCompile "junit:junit:${junitVersion}"
 
     testCompile("org.spockframework:spock-core:${spockVersion}") {
