@@ -26,6 +26,7 @@ class TripRestController extends RestfulController{
         def o =  getObjectToBind()
 
         def noError = true
+        def numberOfTrips = 0
 
         println o.JSON
         if (o.JSON.size() == 1 && o.JSON[0].size() == 0) {
@@ -48,13 +49,23 @@ class TripRestController extends RestfulController{
                 if (!myErrors)
                     myErrors = new MyErrors()
 
-                trip.errors.each {
-                    def fieldName = it.fieldError.field
-                    List<FieldError> fieldErrors = trip.errors.getFieldErrors(fieldName)
-                    fieldErrors.each {
-                        if(it.rejectedValue)
-                            myErrors.addFieldError(it)
+
+                def checkedFields = new HashSet<String>()
+                trip.errors.fieldErrors.each {
+                    def fieldName = it.field
+                    if (!checkedFields.contains(fieldName)) {
+                        List<FieldError> fieldErrors = trip.errors.getFieldErrors(fieldName)
+
+                        if (fieldErrors.size() > 1) {
+                            fieldErrors.each {
+                                if(it.rejectedValue)
+                                    myErrors.addFieldError(it)
+                            }
+                        } else {
+                            myErrors.addFieldError(fieldErrors.get(0))
+                        }
                     }
+                    checkedFields.add(fieldName)
                 }
             };
         }
