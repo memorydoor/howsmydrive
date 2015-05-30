@@ -31,6 +31,10 @@ class MyErrors extends AbstractErrors {
         fieldErrors.addAll(errors.fieldErrors)
     }
 
+    void addFieldError(FieldError fieldError) {
+        fieldErrors.add(fieldError)
+    }
+
     List<ObjectError> getGlobalErrors() {
         return objectErrors
     }

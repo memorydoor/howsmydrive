@@ -27,6 +27,7 @@ class TripRestControllerSpec extends Specification {
 
         then:
         response.json.error == 'no data'
+        Trip.all.size() == 0
     }
 
     void "test postTrip can handle one trip"() {
@@ -37,6 +38,7 @@ class TripRestControllerSpec extends Specification {
         then:
         response.status == 200
         response.json.message == 'Saved 1 trip.'
+        Trip.all.size() == 1
     }
 
     void "test postTrip can handle two trip"() {
@@ -48,6 +50,7 @@ class TripRestControllerSpec extends Specification {
         then:
         response.status == 200
         response.json.message == 'Saved 2 trip.'
+        Trip.all.size() == 2
     }
 
     void "test postTrip can check the startDate format"() {
@@ -57,6 +60,34 @@ class TripRestControllerSpec extends Specification {
 
         then:
         response.json.errors.object[0] == 'howsmydrive.Trip'
+        Trip.all.size() == 0
 
     }
+
+    void "test postTrip doesn't save any trip when any validation error"() {
+        when:
+        request.json = '''[{"tripId":"1","endDate":"2015-05-27 00:00:00.678", "engineRpmMax":12,"speed":50,"startDate":"2015-05-27 00:00:00.678"   },
+                {"tripId":"2a","endDate":"2015-05-27 00:00:00.678", "engineRpmMax":12,"speed":50,"startDate":"2015-05-27 00:00:00.678"   }]'''
+        controller.postTrips()
+
+        then:
+        response.json.errors.object[0] == 'howsmydrive.Trip'
+        Trip.all.size() == 0
+    }
+
+    void "test postTrip to display all invalid fields and only return one message per field for same object"() {
+        when:
+        request.json = '''[{"tripId":"1a","endDate":"2015-05-27 00:00:00.678", "engineRpmMax":12,"speed":50,"startDate":"2015-05-27 00:00:00.678"   },
+                {"tripId":"2a","endDate":"2015-05-27 00:00:00.678", "engineRpmMax":12,"speed":50,"startDate":"2015-05-27 00:00:00.678"   }]'''
+        controller.postTrips()
+
+        then:
+        response.json.errors.object[1] == 'howsmydrive.Trip'
+        response.json.errors.field[1] == 'tripId'
+        response.json.errors["rejected-value"][1] == '2a'
+        response.json.errors.message[1] == 'Unable to parse number [2a]'
+        response.json.errors.size() == 2
+        Trip.all.size() == 0
+    }
+
 }

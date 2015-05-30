@@ -1,9 +1,11 @@
 package howsmydrive
 
+import com.goodriver.grails.MyErrors
 import grails.converters.JSON
 import grails.rest.RestfulController
 import grails.transaction.Transactional
 import grails.artefact.controller.RestResponder
+import org.springframework.validation.FieldError
 
 @Transactional
 class TripRestController extends RestfulController{
@@ -24,7 +26,6 @@ class TripRestController extends RestfulController{
         def o =  getObjectToBind()
 
         def noError = true
-        def numberOfTrips = 0
 
         println o.JSON
         if (o.JSON.size() == 1 && o.JSON[0].size() == 0) {
@@ -32,26 +33,44 @@ class TripRestController extends RestfulController{
         }
 
         def tempTrip
+        def tripList = []
+        def myErrors
         o.JSON.each {
             def trip = new Trip(JSON.parse(it.toString()))
-
-            if (trip.validate()) {
-                trip.save(flush:true)
-                numberOfTrips++;
-            } else {
+            tripList.add(trip)
+            if (!trip.validate()) {
+                noError = false
                 tempTrip = trip
                 trip.errors.each {
                     println it
                 }
-                noError = false
+
+                if (!myErrors)
+                    myErrors = new MyErrors()
+
+                trip.errors.each {
+                    def fieldName = it.fieldError.field
+                    List<FieldError> fieldErrors = trip.errors.getFieldErrors(fieldName)
+                    fieldErrors.each {
+                        if(it.rejectedValue)
+                            myErrors.addFieldError(it)
+                    }
+                }
+            };
+        }
+
+        if(noError) {
+            tripList.each {
+                it.save(flush:true)
             }
         }
 
         if (noError) {
-            respond([message: "Saved $numberOfTrips trip."])
+            respond([message: "Saved $tripList.size trip."])
         }
 
-        respond tempTrip
+        respond myErrors
     }
+
 
 }
