@@ -24,28 +24,23 @@ class ObdReadingRestController extends RestfulController{
         def o =  getObjectToBind()
         def myErrors
 
-        o.JSON.obdReadings.each {
+        o.JSON.each {
             println it.toString()
             def obdReading = new ObdReading(JSON.parse(it.toString()))
-            println System.currentTimeMillis()
-            println obdReading
-
-            obdReading.readings = it.readings.toString()
 
             if (obdReading.validate()) {
-                obdReading.save(flush: true)
+
             } else {
-                if (!myErrors){
-                    myErrors = new MyErrors()
-                }
-                myErrors.addAllErrors(obdReading.errors)
+                respond obdReading
             }
+
+
         }
 
         if (myErrors) {
             respond myErrors
         } else {
-            respond([status: 200])
+            respond([message: "Saved $o.JSON.obdReading.size obdReadings."])
         }
     }
 }

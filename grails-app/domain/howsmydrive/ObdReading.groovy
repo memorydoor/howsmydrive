@@ -2,11 +2,11 @@ package howsmydrive
 
 class ObdReading {
 
-    long tripId
-    double latitude, longitude
+    Long tripId
+    Double latitude, longitude
     Date timestamp
     String readings
-    int speed
+    Integer speed
     //String vin
     //Map<String, String> readings
 

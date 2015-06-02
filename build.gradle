@@ -120,6 +120,7 @@ dependencies {
     // Required by Spock's Mocking
     testCompile "cglib:cglib-nodep:${cglibVersion}"
     testCompile "org.objenesis:objenesis:${objenesisVersion}"
+    testCompile 'com.jayway.jsonpath:json-path:2.0.0'
 }
 
 task createStartScripts(type: MyCreateStartScripts) {
