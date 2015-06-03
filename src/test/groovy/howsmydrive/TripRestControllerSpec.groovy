@@ -90,4 +90,29 @@ class TripRestControllerSpec extends Specification {
         Trip.all.size() == 0
     }
 
+    void "test postTrip display nullable message when tripId is missing"() {
+        when:
+        request.json = '[{"endDate":"2015-05-27 00:00:00.678", "engineRpmMax":12,"speed":50,"startDate":"2015-05-27 00:00:00.678"   }]'
+        controller.postTrips()
+
+        then:
+        response.status == 422
+        response.json.errors.object[0] == 'howsmydrive.Trip'
+        response.json.errors.field[0] == 'tripId'
+        response.json.errors["rejected-value"][0].toString() == "null"
+        response.json.errors.message[0] == 'Property [tripId] of class [class howsmydrive.Trip] cannot be null'
+        response.json.errors.size() == 1
+        Trip.all.size() == 0
+    }
+
+    void "test postTrips response all errors besides for tripId"() {
+        when:
+        request.json = '[{"tripId":"1"}]'
+        controller.postTrips()
+
+        then:
+        response.status == 422
+        response.json.errors.size() == 4
+    }
+
 }
