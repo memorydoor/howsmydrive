@@ -16,7 +16,7 @@ spring:
 ---
 grails:
     databinding:
-        dateFormats: "yyyy/MM/dd HH:mm:ss SSS"
+        dateFormats: "yyyy-MM-dd HH:mm:sss"
     mime:
         disable:
             accept:
