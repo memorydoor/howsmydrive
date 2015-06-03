@@ -22,11 +22,11 @@ class TripRestControllerSpec extends Specification {
 
     void "test postTrip can handle empty json array"() {
         when:
-        request.json = "[{}]"
+        request.json = "[]"
         controller.postTrips()
 
         then:
-        response.json.error == 'no data'
+        response.json.message == 'Saved 0 trip.'
         Trip.all.size() == 0
     }
 
@@ -115,4 +115,27 @@ class TripRestControllerSpec extends Specification {
         response.json.errors.size() == 4
     }
 
+    void "test postTrips can handle unexpected json"() {
+        when:
+        request.json = '''
+        {
+            "hello": [
+                {
+                    "engineRpmMax": 1,
+                    "hello": 2,
+                  "startDate": 1431278401614
+                },
+                {
+                    "engineRpmMax": 1,
+                    "hello": 2
+                },
+
+            ]
+        }
+        '''
+        controller.postTrips()
+
+        then:
+        response.status == 422
+    }
 }

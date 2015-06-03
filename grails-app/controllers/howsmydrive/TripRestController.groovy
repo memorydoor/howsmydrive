@@ -29,7 +29,7 @@ class TripRestController extends RestfulController{
         def numberOfTrips = 0
 
         println o.JSON
-        if (o.JSON.size() == 1 && o.JSON[0].size() == 0) {
+        if (o.JSON.size() == 1 && o.JSON[0] && o.JSON[0].size() == 0) {
             respond ([error: "no data"])
         }
 
